@@ -45,40 +45,36 @@ void make_AdjacencyMatrix(int num_vertex,Adjacencymatrix &adj)
 	adj.make_adj();
 }
 
-void read_number(string str,string &origin,string &destin)
+void read_edge(string str,string &origin,string &destin)
 {
-	origin = str[0];		//時間あればしっかり作る。
-	destin = str[2];
-	/*
 	int flag = 0;
-	string tmp;
 
 	for (int i = 0; i < str.length(); ++i)
 	{
-		tmp = str[i];
-		if(isalpha(tmp.c_str()))
+		if(isalpha(str[i]))
 		{
 			if (!flag)
 			{
-			origin = str[i];
+			origin += str[i];
 			}else
-			destin = str[i];
-		}
+			destin += str[i];
+		}else
+		  flag =1 ;
 	}
-	*/
 }
 
 void make_edge(string str,map<string,int> vertex,int num_vertex,Adjacencymatrix &adj)
 {
-	static int flag=0;
-	string origin,destin;
+	static int flag = 0;
+	string origin = "";
+	string destin = "";
 
 	if (flag == 0)
 	{
 		make_AdjacencyMatrix(num_vertex,adj);
 		flag++;
 	}
-	read_number(str,origin,destin);
+	read_edge(str,origin,destin);
 	adj.add_edge(vertex[origin],vertex[destin]);
 }
 
@@ -88,7 +84,7 @@ int readfile(map<string,int> &vertex,Adjacencymatrix &adj)		//ファイルを読
 	int mark;
 	int num_vertex;
 
-	ifstream ifs("small_data.txt");
+	ifstream ifs("medium_data.txt");
 	if(ifs.fail())
 	{
 		cerr << "Failed to open file" << endl;
@@ -165,7 +161,7 @@ void point_in(int num_vertex,info* vertex_info)
 
 void cycle(Adjacencymatrix adj,int num_vertex,info* vertex_info)
 {
-	int i = num_vertex;
+  int i = num_vertex;
 	while(i){
 	init_point(num_vertex,vertex_info);
 	hand_out_point(adj,vertex_info,num_vertex);
